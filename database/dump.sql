@@ -91,7 +91,7 @@ CREATE TABLE `products` (
   `active` tinyint(1) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Wireless Headphones','High-quality Bluetooth headphones with noise cancellation',99.99,'https://th.bing.com/th/id/OPHS.csMBd8dCkhOtng474C474?w=300&h=300&o=5&dpr=1.5&pid=21.1',50,1,'2025-11-17 19:56:58'),(2,'Smart Watch','Fitness tracker with heart rate monitor',199.99,'https://th.bing.com/th?id=OPHS.aYYpo0Hle6%2fwqw474C474&w=248&h=248&c=17&o=5&dpr=1.5&pid=21.1',30,1,'2025-11-17 19:56:58'),(3,'Laptop Backpack','Durable backpack with laptop compartment',49.99,'https://th.bing.com/th/id/OPHS.2X9xJZCpvJaW4g474C474?w=248&h=248&o=5&dpr=1.5&pid=21.1',75,1,'2025-11-17 19:56:58'),(4,'USB-C Cable','Fast charging USB-C cable 6ft',12.99,'https://th.bing.com/th/id/OPHS.3OsJZ0YhZhyzBg474C474?w=248&h=248&c=17&o=5&dpr=1.5&pid=21.1',200,1,'2025-11-17 19:56:58'),(5,'Desk Lamp','LED desk lamp with adjustable brightness',34.99,'https://th.bing.com/th/id/OPHS.whz0GuqmS1Hucg474C474?w=248&h=248&o=5&dpr=1.5&pid=21.1',40,1,'2025-11-17 19:56:58');
+INSERT INTO `products` VALUES (1,'Sony WH-1000XM6','High-quality Bluetooth headphones with noise cancellation',299.99,'https://storage.googleapis.com/stateless-gstylemag-com/2025/05/9a89f14d-4_wh-1000xm6_swivel_midnightblue-large.jpg',25,1,'2025-11-17 19:56:58'),(2,'Smart Watch','Fitness tracker with heart rate monitor',199.99,'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/49-cell-titanium-black-trail-loop-black-ultra?wid=2000&amp;hei=2000&amp;fmt=jpeg&amp;qlt=95&amp;.v=1724552757277',30,1,'2025-11-17 19:56:58'),(3,'Laptop Backpack','Durable backpack with laptop compartment',49.99,'https://tse2.mm.bing.net/th/id/OIP.TUQ1IFBCNadUGfv_Q8OwjgHaHa?rs=1&amp;pid=ImgDetMain&amp;o=7&amp;rm=3',75,1,'2025-11-17 19:56:58'),(4,'USB-C Cable','Fast charging USB-C cable 6ft',12.99,'https://media.ldlc.com/r1600/ld/products/00/05/66/19/LD0005661952_2.jpg',200,1,'2025-11-17 19:56:58'),(5,'Desk Lamp','LED desk lamp with adjustable brightness',34.99,'https://th.bing.com/th/id/OIP.z3gDetdYGAlOouSJ1Lh9-QHaHa?w=204&amp;h=204&amp;c=7&amp;r=0&amp;o=7&amp;dpr=1.5&amp;pid=1.7&amp;rm=3',40,1,'2025-11-17 19:56:58'),(7,'Perfume','Dior Savauge',135.00,'https://www.dior.com/dw/image/v2/BGXS_PRD/on/demandware.static/-/Library-Sites-DiorSharedLibrary/default/dw3069a07c/images/beauty/01-FRAGRANCES/2023/SAUVAGE/REPUSH-2023/push_rech_elixir3000x3000.jpg?sw=3000',3,1,'2025-11-17 21:45:55');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin@shop.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','Admin','User',NULL,1,'2025-11-17 19:56:58');
+INSERT INTO `users` VALUES (3,'john@doe.com','$2y$10$UMeiIBz0eoZRii2Mxb8WdenJ0NxuyO0qTvmWbSvHac4ubS0pCt/da','John','Doe','',0,'2025-11-17 21:00:23'),(4,'admin@shop.com','$2y$10$vLiFoOVTBvZLXfUF1F91pegDZ/CojeojJWW7QxInlg7rSYByI3G5K','Admin','User',NULL,1,'2025-11-17 21:01:37');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -144,4 +144,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-17 12:37:34
+-- Dump completed on 2025-11-17 14:03:09
