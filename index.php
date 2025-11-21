@@ -80,8 +80,10 @@ $conn->close();
                     $name = $product['name'];
                     $description = $product['description'];
                     $price = $product['price'];
-                    $image = $product['image_url'];
                     $stock = $product['stock'];
+
+                    //If image URL is empty
+                    $image = !empty($product['image_url']) ? $product['image_url'] : 'images/placeholder.jpg';
                     ?>
 
                     <div class="product-card">
