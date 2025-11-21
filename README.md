@@ -1,7 +1,7 @@
 # E-Commerce Platform - COSC 213 Final Project
 
 ## Team Members
-- [Gian Tindogan, Adam Hobson, Stefen Wells]
+- [Gian Tindogan, Adam Hobson, Stefan Wells]
 
 ## Setup Instructions
 
