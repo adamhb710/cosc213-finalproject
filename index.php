@@ -15,6 +15,7 @@ if (isset($_SESSION['success_message'])) {
 
 //Getting all products from our database, $conn is the connection to the sql
 $query = "SELECT * FROM products WHERE active = 1 ORDER BY created_at DESC";
+/** @var mysqli $conn */
 $result = $conn->query($query);
 
 //Creating product array
@@ -71,30 +72,42 @@ $conn->close();
 
         <?php if (count($products) > 0): ?>
             <div class="products-grid">
-                <?php foreach ($product as $products): ?>
+                <?php foreach ($products as $product): ?>
+
+                    <?php
+                    // Splitting product details into variables
+                    $id = $product['id'];
+                    $name = $product['name'];
+                    $description = $product['description'];
+                    $price = $product['price'];
+                    $image = $product['image_url'];
+                    $stock = $product['stock'];
+                    ?>
+
                     <div class="product-card">
-                        <img src="<?php echo $product['image_url']; ?>"
-                             alt="<?php echo $product['name']; ?>"
-                             onerror="this.src='images/products/placeholder.jpg'">
+                        <img src="<?php echo $image ?>"
+                             alt="<?php echo $name; ?>"
+                             onerror="this.src='images/placeholder.jpg'">
 
-                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                        <h3><?php echo $name; ?></h3>
+                        <p><?php echo substr($description, 0, 100); ?>...</p>
 
-                        <p><?php echo htmlspecialchars(substr($product['description'], 0, 100)); ?>...</p>
+                        <div class="price">$<?php echo number_format($price, 2); ?></div>
 
-                        <div class="price">$<?php echo number_format($product['price'], 2); ?></div>
+                        <?php if ($stock > 0): ?>
+                            <p style="color: green;">In Stock: <?php echo $stock ?></p>
+                            <a href="products.php?id=<?php echo $id; ?>" class="btn">View Details</a>
 
-                        <p style="color: <?php echo $product['stock'] > 0 ? 'green' : 'red'; ?>;">
-                            <?php echo $product['stock'] > 0 ? "In Stock: {$product['stock']}" : "Out of Stock"; ?>
-                        </p>
-
-                        <a href="products.php?id=<?php echo $product['id']; ?>" class="btn">View Details</a>
-
-                        <?php if ($product['stock'] > 0): ?>
-                            <a href="php/add_to_cart.php?id=<?php echo $product['id']; ?>" class="btn btn-success">Add
-                                to Cart</a>
+                            <form action="php/add_to_cart.php" method="POST">
+                                <input type="hidden" name="product_id" value="<?php echo $id; ?>">
+                                <button type="submit" class="btn btn-success">Add to Cart</button>
+                            </form>
+                        <?php else: ?>
+                            <p style="color: red">Out of Stock :(</p>
+                            <a href="products.php?id=<?php echo $id; ?>" class="btn">View Details</a>
                         <?php endif; ?>
                     </div>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
             </div>
         <?php else: ?>
             <p>No products available at the moment.</p>
@@ -104,12 +117,8 @@ $conn->close();
 
 <footer>
     <div class="container">
-        <p>&copy; <?php echo date('Y'); ?> My Shop. All rights reserved.</p>
+        <p>&copy; <?php echo date('Y'); ?>Shop-a-Lot. All rights reserved.</p>
     </div>
 </footer>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
