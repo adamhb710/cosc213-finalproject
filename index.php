@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-//Here is the actual webpage
+<!-- Here is the actual webpage ->>
 <!DOCTYPE html>
 <html lang="en">
 <head>
