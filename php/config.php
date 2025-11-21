@@ -1,5 +1,5 @@
 <?php
-// Database Configuration
+// DATABASE SETUP
 define('DB_HOST', 'localhost');
 define('DB_USER', 'ecommerce_user');
 define('DB_PASS', 'ecommerce123');
@@ -9,8 +9,8 @@ define('DB_NAME', 'ecommerce_db');
 session_start();
 
 // Create database connection
-try {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+/** @var mysqli $conn */
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     
     // Check connection
     if ($conn->connect_error) {
@@ -19,19 +19,18 @@ try {
     
     // Set charset to UTF-8
     $conn->set_charset("utf8mb4");
-    
-} catch (Exception $e) {
-    die("Database connection error: " . $e->getMessage());
-}
 
-// Helper function to sanitize input
+// SECURITY FUNCTIONS
 function clean_input($data) {
     global $conn;
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $conn->real_escape_string($data);
+    $data = trim($data);                    // removes whitespace
+    $data = stripslashes($data);            // removes backslashes
+    $data = htmlspecialchars($data);        // prevents XSS
+    return $conn->real_escape_string($data);// prevents SQL injection
 }
+
+
+// USER CHECK FUNCTIONS
 
 // Check if user is logged in
 function is_logged_in() {
