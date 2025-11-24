@@ -41,7 +41,7 @@ $conn->close();
 <body>
 <header>
     <div class="container">
-        <h1></h1>Shop-a-Lot</h1>
+        <h1>Shop-a-Lot</h1>
         <!-- The contents of this navbar changes depending if anyone, including admin, is logged in -->
         <nav>
             <ul>
