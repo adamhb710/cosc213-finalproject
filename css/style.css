@@ -1,3 +1,11 @@
+/* --Theme Colors: Swamp Green -- */
+:root {
+    --swamp-dark: #2d5016;
+    --swamp-medium: #4a7c25;
+    --swamp-light: #6b9b37;
+    --swamp-glow: rgba(74, 124, 37, 0.4);
+}
+
 /* Reset & Base Styles */
 * {
     margin: 0;
@@ -33,7 +41,7 @@ header .container {
 
 header h1 {
     font-size: 1.8rem;
-    color: #222;
+    color: var(--swamp-dark);
     font-weight: 700;
     letter-spacing: -0.5px;
 }
@@ -79,7 +87,8 @@ main {
 
 .product-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 24px var(--swamp-glow);
+    border-color: var(--swamp-light);
 }
 
 .product-card img {
@@ -114,7 +123,7 @@ main {
 .btn {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background: #000;
+    background: var(--swamp-dark);
     color: white;
     border: none;
     border-radius: 8px;
@@ -124,18 +133,24 @@ main {
     text-decoration: none;
     text-align: center;
     transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
 }
 
 .btn:hover {
-    background: #333;
+    background: var(--swamp-medium);
+    box-shadow: 0 6px 20px var(--swamp-glow);
+    transform: translateY(-2px);
 }
 
 .btn-success {
-    background: #000;
+    background: var(--swamp-medium);
+    box-shadow: 0 4px 12px var(--swamp-glow);
 }
 
 .btn-success:hover {
-    background: #333;
+    background: var(--swamp-light);
+    box-shadow: 0 8px 24px var(--swamp-glow);
+    transform: translateY(-2px);
 }
 
 .btn-danger {
