@@ -25,5 +25,25 @@ if ($quantity <= 0) {
     header("Location: cart.php");
     exit();
 }
+
+// look up product in database
+$query = "SELECT id, name, price, stock FROM products WHERE id = '$product_id'";
+$result = mysqli_query($conn, $query);
+
+$product = mysqli_fetch_array($result);
+
+if (!$product) {
+    $_SESSION['message'] = "Product not found.";
+    header("Location: cart.php");
+    exit();
+}
+
+// check if in stock
+
+if ($quantity > $product['stock']) {
+    $_SESSION['message'] = "This product is out of stock.";
+    header("Location: cart.php");
+    exit();
+}
 ?>
 
