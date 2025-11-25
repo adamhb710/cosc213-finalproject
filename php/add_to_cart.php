@@ -1,7 +1,7 @@
 <?php
 // opens session and loads database connection
 session_start();
-require_once 'config.php';
+require_once '../config.php';
 
 // checking the incoming POST data
 if (!isset($_POST['product_id']) || !isset($_POST['quantity'])) {
