@@ -102,8 +102,10 @@ $conn->close();
 
                             <form action="php/add_to_cart.php" method="POST">
                                 <input type="hidden" name="product_id" value="<?php echo $id; ?>">
+                                <input type="hidden" name="quantity" value="1">
                                 <button type="submit" class="btn btn-success">Add to Cart</button>
                             </form>
+                                
                         <?php else: ?>
                             <p style="color: red">Out of Stock :(</p>
                             <a href="products.php?id=<?php echo $id; ?>" class="btn">View Details</a>
