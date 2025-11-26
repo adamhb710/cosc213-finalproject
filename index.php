@@ -8,7 +8,7 @@ $is_admin = !empty($_SESSION['is_admin']);
 
 //Success Messages if they exist
 $success_message = '';
-if (isset($_SESSION['success_message'])) {
+if (isset($_SESSION['message'])) {
     $success_message = $_SESSION['message'];
     unset($_SESSION['message']); // Deleted from php session (still shows in HTML unless user refreshes)
 }
@@ -100,11 +100,12 @@ $conn->close();
                             <p style="color: green;">In Stock: <?php echo $stock ?></p>
                             <a href="products.php?id=<?php echo $id; ?>" class="btn">View Details</a>
 
-                            <form action="php/add_to_cart.php" method="POST">
-                                <input type="hidden" name="product_id" value="<?php echo $id; ?>">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="btn btn-success">Add to Cart</button>
-                            </form>
+                        <form action="php/add_to_cart.php" method="POST">
+                           <input type="hidden" name="product_id" value="<?php echo $id; ?>">
+                           <input type="hidden" name="quantity" value="1">
+                           <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </form>
+
                                 
                         <?php else: ?>
                             <p style="color: red">Out of Stock :(</p>
