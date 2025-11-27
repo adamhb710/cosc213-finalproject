@@ -263,3 +263,36 @@ footer {
 .product-card form .btn {
     margin: 0.5rem 1.25rem 1.25rem;
 }
+
+.cart-table {
+width:100%;
+border-collapse: collapse;
+margin-top 20px;
+}
+
+.cart-table th,
+.cart-table td {
+	padding: 12px;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+.cart-table th {
+	background-color: #222;
+	color: white;
+}
+
+.btn-danger {
+	background-color: #e74c3c;
+	color: white;
+	font-size: 12px;
+	padding: 4px 8px;
+	border-radius: 6px;
+	border: none;
+	cursor: pointer;
+}
+
+.btn-danger:hover {
+background-color: #c0392b;
+}
+

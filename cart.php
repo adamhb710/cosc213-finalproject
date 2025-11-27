@@ -55,6 +55,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
             <th>Price</th>
             <th>Qty</th>
             <th>Subtotal</th>
+	    <th>Remove</th>
         </tr>
 <!-- foreach loop to loop through items in cart
 - to add up subtotal -->
@@ -71,6 +72,13 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
             <td>$<?php echo number_format($item['price'], 2); ?></td>
             <td><?php echo $item['quantity']; ?></td>
             <td>$<?php echo number_format($subtotal, 2); ?></td>
+	    <td>
+		<form action="php/remove_from_cart.php" method="POST">
+		<input type="hidden" name ="product_id" value="<?php 
+					echo $item['id']; ?>"
+		<button class="btn btn-danger btn-remove" type="submit">Remove from cart</button>
+		</form>
+		</td>
         </tr>
         <?php endforeach; ?>
     </table>
