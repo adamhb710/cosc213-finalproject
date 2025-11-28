@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'config.php';
 
 // check if product id exists
 if (!isset($_POST['product_id'])) {
@@ -18,16 +19,26 @@ exit();
 
 // loop through cart and remove item that matches product id
 foreach($_SESSION['cart'] as $index => $item) {
+  
 if ($item['id'] == $product_id) {
+  
+$quantity = $item['quantity'];
 
-// remove item from cart
-unset($_SESSION['cart'][$index]);
+  // put the quantity back when removed from cart
+  $stmt = $conn->prepare("UPDATE products SET stock = stock + ? WHERE id =?");
+  $stmt->bind_param("ii", $quantity, $product_id);
+  $stmt->execute();
 
-//re-index array
-$_SESSION['cart'] = array_values($_SESSION['cart']);
+  // remove the item from the cart
+  unset($_SESSION['cart'][$index]);
 
-$_SESSION['message'] = "Item removed from cart.";
-break;
+  // re-index the array
+  $_SESSION['cart'] = array_values($_SESSION['cart']);
+
+
+  
+  break;
+
 }
 }
 
