@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <header>
         <div class="container">
-            <h1>Shop-A-Lot - Admin</h1>
+            <h1>Shop-a-Lot - Admin</h1>
             <nav>
                 <ul>
                     <li><a href="index.php">Shop</a></li>
