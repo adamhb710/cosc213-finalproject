@@ -1,8 +1,8 @@
 <?php
 // DATABASE SETUP
 define('DB_HOST', 'localhost');
-define('DB_USER', 'ecommerce_user');
-define('DB_PASS', 'ecommerce123');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 define('DB_NAME', 'ecommerce_db');
 
 // Start session

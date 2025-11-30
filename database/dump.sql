@@ -1,147 +1,137 @@
--- MySQL dump 10.13  Distrib 8.0.43, for Linux (x86_64)
---
--- Host: localhost    Database: ecommerce_db
--- ------------------------------------------------------
--- Server version	8.0.43-0ubuntu0.24.04.2
+-- E-Commerce Database Setup
+-- Drop existing and start fresh
+DROP DATABASE IF EXISTS ecommerce_db;
+CREATE DATABASE ecommerce_db;
+USE ecommerce_db;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+-- Categories table
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Auto-set when record created
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;  -- Supports all characters/emojis
 
---
--- Table structure for table `order_items`
---
+INSERT INTO categories (name, description) VALUES
+('Automotive', 'Car parts, accessories, and automotive products'),
+('Technology', 'Electronics, gadgets, and tech accessories'),
+('Cosmetics', 'Beauty products, skincare, and makeup'),
+('Furniture', 'Home and office furniture');
 
-DROP TABLE IF EXISTS `order_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_items` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `quantity` int NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `order_id` (`order_id`),
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Users table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,  -- Stores hashed password, never plain text
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    is_admin TINYINT(1) DEFAULT 0,  -- 0 = regular user, 1 = admin
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `order_items`
---
+-- Default users (admin password: admin123, user password: password)
+INSERT INTO users (email, password, first_name, last_name, is_admin) VALUES
+('admin@shop.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', 'User', 1),
+('user@shop.com', '$2y$10$n4H.RG/W7qhEKZu6z7u8yO5gKj0Q9Vt5x8Jz0F0R9Vt5x8Jz0F0R9u', 'Test', 'User', 0);
 
-LOCK TABLES `order_items` WRITE;
-/*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
-UNLOCK TABLES;
+-- Products table (linked to categories)
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,  -- 10 digits total, 2 after decimal (e.g., 12345.67)
+    image_url VARCHAR(500),
+    stock INT DEFAULT 0,  -- Quantity available
+    active TINYINT(1) DEFAULT 1,  -- 1 = visible in store, 0 = hidden
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- Auto-updates when record changes
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL,  -- If category deleted, set to NULL
+    INDEX idx_category (category_id),  -- Speed up category searches
+    INDEX idx_active (active)
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Table structure for table `orders`
---
+-- Sample products: 4 per category
 
-DROP TABLE IF EXISTS `orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `total_amount` decimal(10,2) NOT NULL,
-  `status` varchar(50) DEFAULT 'pending',
-  `shipping_address` text,
-  `order_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Automotive products
+INSERT INTO products (category_id, name, description, price, stock, image_url) VALUES
+(1, 'Car Floor Mats', 'All-weather heavy duty floor mats for cars and trucks. Universal fit with anti-slip backing.', 49.99, 35, 'https://m.media-amazon.com/images/I/81FJ9lYh4UL._AC_.jpg'),
+(1, 'LED Headlight Bulbs', 'High-performance LED headlight conversion kit. 6000K white light, plug and play installation.', 89.99, 20, 'https://m.media-amazon.com/images/I/81AxNT9yj5L._SL1500_.jpg'),
+(1, 'Tire Pressure Gauge', 'Digital tire pressure gauge with LCD display. Accurate readings for car, truck, and motorcycle tires.', 24.99, 50, 'https://m.media-amazon.com/images/I/61rVKUct5NL.jpg'),
+(1, 'Car Phone Mount', 'Magnetic dashboard phone holder with adjustable viewing angles. Compatible with all smartphones.', 19.99, 75, 'https://m.media-amazon.com/images/I/81FGMqO5gML._AC_.jpg'),
 
---
--- Dumping data for table `orders`
---
+-- Technology products
+(2, 'Wireless Earbuds', 'True wireless earbuds with active noise cancellation. 24-hour battery life with charging case.', 129.99, 45, 'https://m.media-amazon.com/images/I/7159EmTam6L._AC_.jpg'),
+(2, 'Smart Watch Pro', 'Fitness tracker with heart rate monitor, GPS, and sleep tracking. Water resistant up to 50m.', 249.99, 28, 'https://m.media-amazon.com/images/I/71JU-bUt-sL._AC_SL1500_.jpg'),
+(2, 'Wireless Keyboard', 'Mechanical RGB keyboard with customizable backlighting. Bluetooth and USB connectivity.', 79.99, 32, 'https://m.media-amazon.com/images/I/61T79euEq2L._AC_SL1500_.jpg'),
+(2, 'USB-C Hub Adapter', '7-in-1 USB-C hub with HDMI, USB 3.0, SD card reader, and PD charging. Perfect for laptops.', 39.99, 60, 'https://m.media-amazon.com/images/I/71FyOyxleDL._AC_SL1500_.jpg'),
 
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
-UNLOCK TABLES;
+-- Cosmetics products
+(3, 'Vitamin C Serum', 'Anti-aging facial serum with 20% vitamin C. Brightens skin and reduces fine lines.', 34.99, 42, 'https://m.media-amazon.com/images/I/81BIka+CKIL._AC_.jpg'),
+(3, 'Makeup Brush Set', 'Professional 12-piece makeup brush set with carrying case. Synthetic bristles, cruelty-free.', 44.99, 38, 'https://m.media-amazon.com/images/I/71hTpC71pLL._AC_.jpg'),
+(3, 'Hydrating Face Mask', 'Sheet mask set with hyaluronic acid and collagen. Pack of 10 individually wrapped masks.', 24.99, 55, 'https://cdn.shopify.com/s/files/1/0022/1557/5609/products/SkinRepublicHyaluronicAcid_CollagenFaceMask_10packstack2000x2000_600x.png?v=1606178047'),
+(3, 'Natural Lip Balm Set', 'Organic lip balm trio with shea butter and vitamin E. Aloe Vera, Moroccan Argan Oil, and Coconut Oil.', 14.99, 80, 'https://medino-product.imgix.net/dr-organic-lip-balm-gift-set-3-pack-7c8352c8.png?h=686&bg=FFF&auto=format,compress&q=60'),
 
---
--- Table structure for table `products`
---
+-- Furniture products
+(4, 'Office Desk Chair', 'Ergonomic mesh office chair with lumbar support and adjustable height. 360-degree swivel.', 189.99, 18, 'https://m.media-amazon.com/images/I/615R0pQlY4L._AC_SL1500_.jpg'),
+(4, 'Bookshelf 5-Tier', 'Modern wooden bookshelf with 5 shelves. Perfect for books, plants, and decor. Easy assembly.', 119.99, 22, 'https://i5.walmartimages.com/seo/Dextrus-5-Tier-Bookshelf-Sturdy-Wood-Storage-Bookcase-Shelves-with-Metal-Frame-Plant-Display-for-Living-Room-Office-White_eb950bf4-3b8f-4612-b7ad-68ac5eb27018.61685b64c067b274260723cba6785c86.jpeg'),
+(4, 'Coffee Table', 'Rustic wood and metal coffee table with lower storage shelf. Fits most living room layouts.', 159.99, 15, 'https://m.media-amazon.com/images/I/71vS6TGjEgL.jpg'),
+(4, 'Floor Lamp LED', 'Modern arc floor lamp with dimmable LED light. Adjustable height and angle, energy efficient.', 79.99, 30, 'https://m.media-amazon.com/images/I/616j--FwnVL._AC_SL1500_.jpg');. Perfect for laptops.', 39.99, 60, 'https://via.placeholder.com/400x400/4a7c25/ffffff?text=USB+Hub'),
 
-DROP TABLE IF EXISTS `products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `products` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `description` text,
-  `price` decimal(10,2) NOT NULL,
-  `image_url` varchar(500) DEFAULT NULL,
-  `stock` int DEFAULT '0',
-  `active` tinyint(1) DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Cosmetics products
+(3, 'Vitamin C Serum', 'Anti-aging facial serum with 20% vitamin C. Brightens skin and reduces fine lines.', 34.99, 42, 'https://via.placeholder.com/400x400/6b9b37/ffffff?text=Vitamin+Serum'),
+(3, 'Makeup Brush Set', 'Professional 12-piece makeup brush set with carrying case. Synthetic bristles, cruelty-free.', 44.99, 38, 'https://via.placeholder.com/400x400/6b9b37/ffffff?text=Brush+Set'),
+(3, 'Hydrating Face Mask', 'Sheet mask set with hyaluronic acid and collagen. Pack of 10 individually wrapped masks.', 24.99, 55, 'https://via.placeholder.com/400x400/6b9b37/ffffff?text=Face+Masks'),
+(3, 'Natural Lip Balm Set', 'Organic lip balm trio with shea butter and vitamin E. Vanilla, mint, and cherry flavors.', 14.99, 80, 'https://via.placeholder.com/400x400/6b9b37/ffffff?text=Lip+Balm'),
 
---
--- Dumping data for table `products`
---
+-- Furniture products
+(4, 'Office Desk Chair', 'Ergonomic mesh office chair with lumbar support and adjustable height. 360-degree swivel.', 189.99, 18, 'https://via.placeholder.com/400x400/1b5e20/ffffff?text=Office+Chair'),
+(4, 'Bookshelf 5-Tier', 'Modern wooden bookshelf with 5 shelves. Perfect for books, plants, and decor. Easy assembly.', 119.99, 22, 'https://via.placeholder.com/400x400/1b5e20/ffffff?text=Bookshelf'),
+(4, 'Coffee Table', 'Rustic wood and metal coffee table with lower storage shelf. Fits most living room layouts.', 159.99, 15, 'https://via.placeholder.com/400x400/1b5e20/ffffff?text=Coffee+Table'),
+(4, 'Floor Lamp LED', 'Modern arc floor lamp with dimmable LED light. Adjustable height and angle, energy efficient.', 79.99, 30, 'https://via.placeholder.com/400x400/1b5e20/ffffff?text=Floor+Lamp');
 
-LOCK TABLES `products` WRITE;
-/*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Sony WH-1000XM6','High-quality Bluetooth headphones with noise cancellation',299.99,'https://storage.googleapis.com/stateless-gstylemag-com/2025/05/9a89f14d-4_wh-1000xm6_swivel_midnightblue-large.jpg',25,1,'2025-11-17 19:56:58'),(2,'Smart Watch','Fitness tracker with heart rate monitor',199.99,'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/49-cell-titanium-black-trail-loop-black-ultra?wid=2000&amp;hei=2000&amp;fmt=jpeg&amp;qlt=95&amp;.v=1724552757277',30,1,'2025-11-17 19:56:58'),(3,'Laptop Backpack','Durable backpack with laptop compartment',49.99,'https://tse2.mm.bing.net/th/id/OIP.TUQ1IFBCNadUGfv_Q8OwjgHaHa?rs=1&amp;pid=ImgDetMain&amp;o=7&amp;rm=3',75,1,'2025-11-17 19:56:58'),(4,'USB-C Cable','Fast charging USB-C cable 6ft',12.99,'https://media.ldlc.com/r1600/ld/products/00/05/66/19/LD0005661952_2.jpg',200,1,'2025-11-17 19:56:58'),(5,'Desk Lamp','LED desk lamp with adjustable brightness',34.99,'https://th.bing.com/th/id/OIP.z3gDetdYGAlOouSJ1Lh9-QHaHa?w=204&amp;h=204&amp;c=7&amp;r=0&amp;o=7&amp;dpr=1.5&amp;pid=1.7&amp;rm=3',40,1,'2025-11-17 19:56:58'),(7,'Perfume','Dior Savauge',135.00,'https://www.dior.com/dw/image/v2/BGXS_PRD/on/demandware.static/-/Library-Sites-DiorSharedLibrary/default/dw3069a07c/images/beauty/01-FRAGRANCES/2023/SAUVAGE/REPUSH-2023/push_rech_elixir3000x3000.jpg?sw=3000',3,1,'2025-11-17 21:45:55');
-/*!40000 ALTER TABLE `products` ENABLE KEYS */;
-UNLOCK TABLES;
+-- Addresses table (for shipping)
+CREATE TABLE addresses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    address_line1 VARCHAR(255) NOT NULL,
+    address_line2 VARCHAR(255),
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(20) NOT NULL,
+    country VARCHAR(100) DEFAULT 'USA',
+    is_default TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user (user_id)
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Table structure for table `users`
---
+-- Orders table
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    address_id INT,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    notes TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (address_id) REFERENCES addresses(id) ON DELETE SET NULL,
+    INDEX idx_user (user_id),
+    INDEX idx_status (status),
+    INDEX idx_order_date (order_date)
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `is_admin` tinyint(1) DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'john@doe.com','$2y$10$UMeiIBz0eoZRii2Mxb8WdenJ0NxuyO0qTvmWbSvHac4ubS0pCt/da','John','Doe','',0,'2025-11-17 21:00:23'),(4,'admin@shop.com','$2y$10$vLiFoOVTBvZLXfUF1F91pegDZ/CojeojJWW7QxInlg7rSYByI3G5K','Admin','User',NULL,1,'2025-11-17 21:01:37');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2025-11-17 14:03:09
+-- Order items table (what products are in each order)
+CREATE TABLE order_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price_at_purchase DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    INDEX idx_order (order_id),
+    INDEX idx_product (product_id)
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
