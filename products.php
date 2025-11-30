@@ -63,7 +63,7 @@ $product = $result->fetch_assoc();
 <body>
     <header>
         <div class="container">
-            <h1>🛒 My Shop</h1>
+            <h1>Shop-A-Lot</h1>
             <nav>
                 <ul>
                     <li><a href="index.php">Home</a></li>
