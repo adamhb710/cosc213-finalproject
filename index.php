@@ -13,8 +13,23 @@ if (isset($_SESSION['message'])) {
     unset($_SESSION['message']); // Deleted from php session (still shows in HTML unless user refreshes)
 }
 
-//Getting all products from our database, $conn is the connection to the sql
-$query = "SELECT * FROM products WHERE active = 1 ORDER BY created_at DESC";
+// Get selected category from URL (?category=1)
+$selected_category = isset($_GET['category']) ? intval($_GET['category']) : null;
+
+// Fetch all categories for filter buttons
+$categories_query = "SELECT * FROM categories ORDER BY name";
+$categories_result = $conn->query($categories_query);
+$categories = [];
+while ($cat = $categories_result->fetch_assoc()) {
+    $categories[] = $cat;
+}
+
+// Build query based on selected category
+if ($selected_category) {
+    $query = "SELECT * FROM products WHERE active = 1 AND category_id = $selected_category ORDER BY created_at DESC";
+} else {
+    $query = "SELECT * FROM products WHERE active = 1 ORDER BY created_at DESC";
+}
 /** @var mysqli $conn */
 $result = $conn->query($query);
 
@@ -70,6 +85,19 @@ $conn->close();
             <div class="message success"> <?php echo $success_message; ?> </div>
         <?php endif; ?>
 
+        <!-- Category filter buttons -->
+        <div class="category-filters">
+            <a href="index.php" class="filter-btn <?php echo !$selected_category ? 'active' : ''; ?>">
+                All Products
+            </a>
+            <?php foreach ($categories as $category): ?>
+                <a href="index.php?category=<?php echo $category['id']; ?>"
+                   class="filter-btn <?php echo $selected_category == $category['id'] ? 'active' : ''; ?>">
+                    <?php echo $category['name']; ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+
         <?php if (count($products) > 0): ?>
             <div class="products-grid">
                 <?php foreach ($products as $product): ?>
@@ -122,7 +150,7 @@ $conn->close();
 
 <footer>
     <div class="container">
-        <p>&copy; <?php echo date('Y'); ?>Shop-a-Lot. All rights reserved.</p>
+        <p>&copy; <?php echo date('Y'); ?> Shop-a-Lot. All rights reserved.</p>
     </div>
 </footer>
 </body>

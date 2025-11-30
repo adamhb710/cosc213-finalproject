@@ -308,3 +308,32 @@ background-color: #c0392b;
 	padding: 6px 10px;
 }
 
+/* Category Filter Buttons */
+.category-filters {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    color: #333;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: var(--swamp-medium);
+    color: var(--swamp-dark);
+}
+
+.filter-btn.active {
+    background: var(--swamp-dark);
+    color: white;
+    border-color: var(--swamp-dark);
+}
