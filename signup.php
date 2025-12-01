@@ -1,4 +1,5 @@
 <?php
+//Centralized PHP logic here
 require_once 'php/config.php';
 
 // If already logged in, redirect to home
@@ -7,10 +8,10 @@ if (is_logged_in()) {
     exit();
 }
 
+// Error array for validation messages
 $errors = array();
-$success = "";
 
-// Handle form submission
+// Handle signup form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get and sanitize input
     $first_name = clean_input($_POST['first_name']);
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     
-    // Validation
+    // Validation to check if the fields are filled and valid
     if (empty($first_name)) {
         $errors[] = "First name is required";
     }
@@ -45,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = "Passwords do not match";
     }
     
-    // Check if email already exists
+    // Check if email already exists in the database
     if (empty($errors)) {
         $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
+        $stmt->bind_param("s", $email); // Type String
         $stmt->execute();
         $result = $stmt->get_result();
         
@@ -59,12 +60,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // If no errors, create account
     if (empty($errors)) {
+        // Hash the password for security purposes
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
-        
+
+        //Insert User into the database
         $stmt = $conn->prepare("INSERT INTO users (email, password, first_name, last_name, phone) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("sssss", $email, $password_hash, $first_name, $last_name, $phone);
         
         if ($stmt->execute()) {
+            // Success - redirects user to login page
             $_SESSION['message'] = "Account created successfully! Please login.";
             header("Location: login.php");
             exit();
@@ -73,7 +77,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+
+//Preserving form values if the validation portion fails
+$first_name_value = isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : '';
+$last_name_value = isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : '';
+$email_value = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
+$phone_value = isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : '';
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,7 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container">
             <form method="POST" action="signup.php" class="form-container">
                 <h2>Create Account</h2>
-                
+
+                <!-- Display error messages if any -->
                 <?php if (!empty($errors)): ?>
                     <div class="message error">
                         <?php foreach ($errors as $error): ?>
@@ -108,47 +121,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
-                
+
+                <!-- First Name Input -->
                 <div class="form-group">
                     <label for="first_name">First Name *</label>
                     <input type="text" id="first_name" name="first_name" 
-                           value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>" 
+                           value="<?php echo $first_name_value; ?>"
                            required>
                 </div>
-                
+
+                <!-- Last Name Input -->
                 <div class="form-group">
                     <label for="last_name">Last Name *</label>
                     <input type="text" id="last_name" name="last_name" 
-                           value="<?php echo isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : ''; ?>" 
+                           value="<?php echo $last_name_value; ?>"
                            required>
                 </div>
-                
+
+                <!-- Email Input -->
                 <div class="form-group">
                     <label for="email">Email *</label>
                     <input type="email" id="email" name="email" 
-                           value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" 
+                           value="<?php echo $email_value; ?>"
                            required>
                 </div>
-                
+
+                <!-- Optional Phone input -->
                 <div class="form-group">
                     <label for="phone">Phone (optional)</label>
                     <input type="text" id="phone" name="phone" 
-                           value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
+                           value="<?php echo $phone_value; ?>">
                 </div>
-                
+
+                <!-- Password Input -->
                 <div class="form-group">
                     <label for="password">Password *</label>
                     <input type="password" id="password" name="password" required>
                     <small>Must be at least 6 characters</small>
                 </div>
-                
+
+                <!-- Confirming Password Input -->
                 <div class="form-group">
                     <label for="confirm_password">Confirm Password *</label>
                     <input type="password" id="confirm_password" name="confirm_password" required>
                 </div>
-                
+
+                <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary btn-block">Create Account</button>
-                
+
+                <!-- Login Link -->
                 <p class="text-center" style="margin-top: 1rem;">
                     Already have an account? <a href="login.php">Login here</a>
                 </p>
