@@ -114,8 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div style="margin-top: 2rem; padding: 1rem; background: #f0f0f0; border-radius: 4px;">
                     <p style="margin: 0; font-size: 0.9rem;"><strong>Test Accounts:</strong></p>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem;">
-                        Admin: admin@shop.com / admin123
-                        User:
+                        Admin: admin@shop.com / admin123 <br>
+                        User:  user@shop.com / user123
                     </p>
                 </div>
             </form>
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <footer>
         <div class="container">
-            <p>&copy; <?php echo date('Y'); ?> My Shop. All rights reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> Shop-a-Lot. All rights reserved.</p>
         </div>
     </footer>
 </body>
