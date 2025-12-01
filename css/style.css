@@ -393,3 +393,62 @@ background-color: #c0392b;
 .product-info .form-group input[type="number"] {
     width: 100px;
 }
+
+/* Admin Panel Styles */
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.products-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.products-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.products-table th {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem;
+    text-align: left;
+}
+
+.products-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.products-table tr:hover {
+    background: #f8f9fa;
+}
+
+.product-image-small {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
