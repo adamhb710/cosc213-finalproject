@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <footer>
         <div class="container">
-            <p>&copy; <?php echo date('Y'); ?> My Shop. All rights reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> Shop-a-Lot. All rights reserved.</p>
         </div>
     </footer>
 </body>

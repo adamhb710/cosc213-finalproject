@@ -91,5 +91,12 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 
     <?php endif; ?>
 </main>
+
+<footer>
+    <div class="container">
+        <p>&copy; <?php echo date('Y'); ?> Shop-a-Lot. All rights reserved.</p>
+    </div>
+</footer>
+
 </body>
 </html>
