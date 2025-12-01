@@ -115,6 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <p style="margin: 0; font-size: 0.9rem;"><strong>Test Accounts:</strong></p>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem;">
                         Admin: admin@shop.com / admin123
+                        User:
                     </p>
                 </div>
             </form>
