@@ -101,16 +101,16 @@ Or via command line:
 cosc213-finalproject/
 ├── css/
 │   └── style.css                   # Main stylesheet (swamp green theme)
+├── database/
+│   └── ecommerce_db.sql            # Database schema and sample data
+├── images/
+│   └── placeholder.jpg             # Default product image
 ├── php/
 │   ├── config.php                  # Database connection & helper functions
 │   ├── add_to_cart.php             # Add items to cart
 │   ├── remove_from_cart.php        # Remove items from cart
 │   ├── admin_delete_product.php    # Delete products
 │   └── logout.php                  # Logout functionality
-├── images/
-│   └── placeholder.jpg             # Default product image
-├── database/
-│   └── ecommerce_db.sql            # Database schema and sample data
 ├── index.php                       # Product listing homepage
 ├── products.php                    # Individual product details
 ├── cart.php                        # Shopping cart
