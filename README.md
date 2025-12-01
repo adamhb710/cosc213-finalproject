@@ -102,23 +102,24 @@ cosc213-finalproject/
 ├── css/
 │   └── style.css                   # Main stylesheet (swamp green theme)
 ├── database/
-│   └── ecommerce_db.sql            # Database schema and sample data
+│   └── dump.sql                    # Database schema and sample data
 ├── images/
 │   └── placeholder.jpg             # Default product image
 ├── php/
-│   ├── config.php                  # Database connection & helper functions
 │   ├── add_to_cart.php             # Add items to cart
-│   ├── remove_from_cart.php        # Remove items from cart
 │   ├── admin_delete_product.php    # Delete products
-│   └── logout.php                  # Logout functionality
-├── index.php                       # Product listing homepage
-├── products.php                    # Individual product details
-├── cart.php                        # Shopping cart
-├── checkout.php                    # Checkout process
-├── login.php                       # User login
-├── signup.php                      # User registration
+│   ├── checkout_process.php        # Simulates checkout
+│   ├── config.php                  # Database connection & helper functions
+│   ├── logout.php                  # Logout functionality   
+│   └── remove_from_cart.php        # Remove items from cart
+├── README.md                       # This file
 ├── admin.php                       # Admin dashboard
 ├── admin_add_product.php           # Add new products
 ├── admin_edit_product.php          # Edit existing products
-└── README.md                       # This file
+├── cart.php                        # Shopping cart
+├── checkout.php                    # Checkout process
+├── index.php                       # Product listing homepage
+├── login.php                       # User login
+├── products.php                    # Individual product details
+└── signup.php                      # User registration
 ```
