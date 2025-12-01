@@ -73,7 +73,7 @@ mysqli_query($conn, $update_query);
 
 
 $_SESSION['message'] = "Item has been added to your cart.";
-header("Location: /index.php");
+header("Location: ../index.php");
 exit();
 ?>
 
