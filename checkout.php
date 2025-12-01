@@ -78,7 +78,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     <h2>Total: $<?php echo number_format($total, 2); ?></h2>
 
 <!-- checkout form -->
-    <form type="POST">
+    <form action="php/checkout_process.php" type="POST">
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" required><br>
         <label for="lastName">Last Name:</label>
