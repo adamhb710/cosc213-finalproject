@@ -77,7 +77,7 @@ INSERT INTO products (category_id, name, description, price, stock, image_url) V
 (4, 'Office Desk Chair', 'Ergonomic mesh office chair with lumbar support and adjustable height. 360-degree swivel.', 189.99, 18, 'https://m.media-amazon.com/images/I/615R0pQlY4L._AC_SL1500_.jpg'),
 (4, 'Bookshelf 5-Tier', 'Modern wooden bookshelf with 5 shelves. Perfect for books, plants, and decor. Easy assembly.', 119.99, 22, 'https://i5.walmartimages.com/seo/Dextrus-5-Tier-Bookshelf-Sturdy-Wood-Storage-Bookcase-Shelves-with-Metal-Frame-Plant-Display-for-Living-Room-Office-White_eb950bf4-3b8f-4612-b7ad-68ac5eb27018.61685b64c067b274260723cba6785c86.jpeg'),
 (4, 'Coffee Table', 'Rustic wood and metal coffee table with lower storage shelf. Fits most living room layouts.', 159.99, 15, 'https://m.media-amazon.com/images/I/71vS6TGjEgL.jpg'),
-(4, 'Floor Lamp LED', 'Modern arc floor lamp with dimmable LED light. Adjustable height and angle, energy efficient.', 79.99, 30, 'https://m.media-amazon.com/images/I/616j--FwnVL._AC_SL1500_.jpg');. Perfect for laptops.', 39.99, 60, 'https://via.placeholder.com/400x400/4a7c25/ffffff?text=USB+Hub'),
+(4, 'Floor Lamp LED', 'Modern arc floor lamp with dimmable LED light. Adjustable height and angle, energy efficient.', 79.99, 30, 'https://m.media-amazon.com/images/I/616j--FwnVL._AC_SL1500_.jpg');
 
 -- Cosmetics products
 (3, 'Vitamin C Serum', 'Anti-aging facial serum with 20% vitamin C. Brightens skin and reduces fine lines.', 34.99, 42, 'https://via.placeholder.com/400x400/6b9b37/ffffff?text=Vitamin+Serum'),
