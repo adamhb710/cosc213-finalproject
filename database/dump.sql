@@ -32,8 +32,8 @@ CREATE TABLE users (
 
 -- Default users (admin password: admin123, user password: password)
 INSERT INTO users (email, password, first_name, last_name, is_admin) VALUES
-('admin@shop.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', 'User', 1),
-('user@shop.com', '$2y$10$n4H.RG/W7qhEKZu6z7u8yO5gKj0Q9Vt5x8Jz0F0R9Vt5x8Jz0F0R9u', 'Test', 'User', 0);
+('admin@shop.com', '$2y$10$WQmJzb0G0.uk345rdf0isu7tPIsqKxTIkXT3sSvEvsh0lB5y8/JWG', 'Admin', 'User', 1),
+('user@shop.com', '$2y$10$am.I7MDDjzmlfmlAIPOQkuaqp5LmvV.TEDG0tClt6/d5KcuLWE6yy', 'Test', 'User', 0);
 
 -- Products table (linked to categories)
 CREATE TABLE products (
