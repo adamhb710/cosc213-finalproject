@@ -29,6 +29,8 @@ shopping cart functionality, and an admin panel.
 - Shopping cart functionality
 - Admin panel with CRUD operations
 - Multi-step checkout simulation
+- Edit User Information
+- Delete Users
 
 ## Advanced Features
 
