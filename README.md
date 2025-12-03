@@ -13,7 +13,7 @@ shopping cart functionality, and an admin panel.
 
 ## Technologies Used
 
-- **FrontEnd:** HTML5, CSS, JavaScript
+- **FrontEnd:** HTML5, CSS
 - **BackEnd:** PHP 8.4.3
 - **DataBase:** MySQL
 - **Server:** Apache (XAMPP)
