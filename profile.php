@@ -49,6 +49,48 @@ if (isset($_SESSION['message'])) {
 
         <h2>Hello, <?php echo $_SESSION['first_name']; ?></h2>
 
+        <form action="php/edit_account.php" method="POST" class="form-container">
+            <h2>Edit Account Information</h2>
+            <p> Leave field blank if you are not changing it</p>
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name"
+                    placeholder="<?php echo $_SESSION['first_name']; ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name"
+                    placeholder="<?php echo $_SESSION['last_name']; ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email"
+                    placeholder="<?php echo $_SESSION['email']; ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone (optional)</label>
+                <input type="text" id="phone" name="phone"
+                    placeholder="<?php if(isset($_SESSION['phone']) {echo $_SESSION['phone'];} ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="password"> New Password</label>
+                <input type="password" id="password" name="password"
+                    placeholder="<?php echo $_SESSION['email']; ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm New Password</label>
+                <input type="password" id="confirm_password" name="confirm_password"
+                    placeholder="<?php echo $_SESSION['email']; ?>">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Confirm Changes</button>
+        </form>
 
         <form action="php/delete_account.php" method="POST">
             <h2>Delete Account</h2>
