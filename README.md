@@ -1,5 +1,7 @@
 # Shop-a-Lot - an E-Commerce platform
 
+https://github.com/adamhb710/cosc213-finalproject
+
 ## Team Members
 
 - [Gian Tindogan]
