@@ -31,6 +31,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
                 <li><a href="index.php">Home</a></li>
                 <li><a href="products.php">Products</a></li>
                 <?php if (is_logged_in()): ?>
+				<li><a href="profile.php">Profile</a></li>
                 <li><a href="php/logout.php">Logout</a></li>
                 <?php else: ?>
                 <li><a href="login.php">Login</a></li>
@@ -100,3 +101,4 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 
 </body>
 </html>
+
