@@ -47,9 +47,13 @@ if (isset($_SESSION['message'])) {
             <div class="message success"> <?php echo $success_message; ?> </div>
         <?php endif; ?>
 
+        <h2>Hello, <?php echo $_SESSION['first_name']; ?></h2>
+
+
         <form action="php/delete_account.php" method="POST">
             <h2>Delete Account</h2>
             <p class="text-danger">Warning! Deleting your account is permanent and can't be undone.</p>
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
             <button type="submit" class="btn btn-danger">Delete Account</button>
         </form>
     </div>
