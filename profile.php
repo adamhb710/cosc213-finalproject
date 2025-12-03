@@ -12,12 +12,6 @@ if (isset($_SESSION['message'])) {
     $success_message = $_SESSION['message'];
     unset($_SESSION['message']); // Deleted from php session (still shows in HTML unless user refreshes)
 }
-
-//add code to edit user information
-
-//add code to delete user
-
-//add code to change currency (if we wanna)
 ?>
 
 <!-- Here is the actual webpage -->
@@ -38,6 +32,9 @@ if (isset($_SESSION['message'])) {
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="cart.php">Cart</a></li>
+                <?php if($is_admin): ?>
+                   <li><a href="admin.php">Admin</a><li>
+                <?php endif; ?>
                 <li><a href="php/logout.php">Logout</a></li>
             </ul>
         </nav>
@@ -46,10 +43,15 @@ if (isset($_SESSION['message'])) {
 
 <main>
     <div class="container">
-        <h2>Hello, <?php echo $_SESSION('user_id'); ?> </h2>
         <?php if ($success_message): ?>
             <div class="message success"> <?php echo $success_message; ?> </div>
         <?php endif; ?>
+
+        <form action="php/delete_account.php" method="POST">
+            <h2>Delete Account</h2>
+            <p class="text-danger">Warning! Deleting your account is permanent and can't be undone.</p>
+            <button type="submit" class="btn btn-danger">Delete Account</button>
+        </form>
     </div>
 </main>
 
