@@ -11,7 +11,7 @@ $confirm_password = $_POST['confirm_password'];
 $phone = $_POST['phone'];
 
 if ($password != $confirm_password) {
-    $_SESSION['error'] = "Passwords do not match.";
+    $_SESSION['message'] = "Passwords do not match.";
     header("Location: ../profile.php");
     exit();
 }
