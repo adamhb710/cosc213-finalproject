@@ -111,7 +111,9 @@ cosc213-finalproject/
 │   ├── checkout_process.php        # Simulates checkout
 │   ├── config.php                  # Database connection & helper functions
 │   ├── logout.php                  # Logout functionality   
-│   └── remove_from_cart.php        # Remove items from cart
+│   ├── remove_from_cart.php        # Remove items from cart
+|   ├── delete_account.php          # Delete account
+|   └── edit_account.php            # Edits account information
 ├── README.md                       # This file
 ├── admin.php                       # Admin dashboard
 ├── admin_add_product.php           # Add new products
@@ -121,5 +123,6 @@ cosc213-finalproject/
 ├── index.php                       # Product listing homepage
 ├── login.php                       # User login
 ├── products.php                    # Individual product details
-└── signup.php                      # User registration
+├── signup.php                      # User registration
+└── profile.php                     # Profile settings page
 ```
